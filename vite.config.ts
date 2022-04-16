@@ -6,6 +6,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import html from 'vite-plugin-html';
 const { dependencies, devDependencies, name, version } = pkg;
+const assetsDir = 'assets';
 // 生成版本号
 const appVersion = dayjs().format('YYYYMMDDHHmm');
 const lastBuildTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
@@ -44,13 +45,14 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
       },
     },
     build: {
+      assetsDir: assetsDir,
       sourcemap: false,
       chunkSizeWarningLimit: 1500,
       rollupOptions: {
         output: {
-          entryFileNames: `assets/[name].${appVersion}.js`,
-          chunkFileNames: `assets/[name].${appVersion}.js`,
-          assetFileNames: `assets/[name].${appVersion}.[ext]`,
+          entryFileNames: `${assetsDir}/[name].${appVersion}.js`,
+          chunkFileNames: `${assetsDir}/[name].${appVersion}.js`,
+          assetFileNames: `${assetsDir}/[name].${appVersion}.[ext]`,
         },
       },
     },
