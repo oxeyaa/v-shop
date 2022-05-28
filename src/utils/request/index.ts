@@ -139,4 +139,4 @@ function httpErrorHandle(error: AxiosError) {
   });
 }
 
-export const defRequest = createRequest;
+export const request = createRequest;

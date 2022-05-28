@@ -1,12 +1,15 @@
 import type { UserConfig, ConfigEnv } from 'vite';
+import { resolve } from 'path';
 import { loadEnv } from 'vite';
 import pkg from './package.json';
 import dayjs from 'dayjs';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import html from 'vite-plugin-html';
+
 const { dependencies, devDependencies, name, version } = pkg;
 const assetsDir = 'assets';
+
 // 生成版本号
 const appVersion = dayjs().format('YYYYMMDDHHmm');
 const lastBuildTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
@@ -18,20 +21,25 @@ const __APP_INFO__ = {
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfig => {
-  console.log(`--- 执行 ${command} ${lastBuildTime} ---`);
+  console.log(`--- run ${command} ${dayjs().format('YYYY-MM-DD HH:mm:ss')} ---`);
   const root = process.cwd();
   const env = loadEnv(mode, root);
 
   return {
     base: './',
-    resolve: {
-      alias: [
-        {
-          find: '@',
-          replacement: '/src',
+    plugins: [
+      vue(),
+      vueJsx(),
+      // vite-plugin-html
+      html({
+        minify: true, // 这个参数正反都会压缩 ?。?
+        inject: {
+          data: {
+            title: env.VITE_APP_TITLE,
+          },
         },
-      ],
-    },
+      }),
+    ],
     server: {
       host: true,
       port: Number(env.VITE_PORT),
@@ -52,8 +60,13 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         output: {
           entryFileNames: `${assetsDir}/[name].${appVersion}.js`,
           chunkFileNames: `${assetsDir}/[name].${appVersion}.js`,
-          assetFileNames: `${assetsDir}/[name].${appVersion}.[ext]`,
+          assetFileNames: `${assetsDir}/static/[name].${appVersion}.[ext]`,
         },
+      },
+    },
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src'),
       },
     },
     define: {
@@ -72,18 +85,5 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         },
       },
     },
-    plugins: [
-      vue(),
-      vueJsx(),
-      // vite-plugin-html
-      html({
-        minify: true, // 这个参数正反都会压缩 ?。?
-        inject: {
-          data: {
-            title: env.VITE_APP_TITLE,
-          },
-        },
-      }),
-    ],
   };
 };

@@ -37,7 +37,7 @@ router.beforeEach(async (to: toRouteType, from, next) => {
     console.info('app URL', window.location.href);
 
     console.info(
-      '[用户信息] 设备信息: ',
+      '[用户信息] 设备信息：',
       '设备型号',
       deviceModel(),
       '是否Android',

@@ -219,24 +219,25 @@ const routes = [
       title: '主题风格',
     },
   },
-  // errorPage
+  // Test
   {
     path: '/test',
     component: () => import('@/views/test/index.vue'),
     meta: {
-      title: '加载异常',
+      title: '测试',
     },
   },
+  // exception
   {
     path: '/reload',
-    component: () => import('@/views/error/reload.vue'),
+    component: () => import('@/views/exception/reload.vue'),
     meta: {
       title: '加载异常',
     },
   },
   {
     path: '/404',
-    component: () => import('@/views/error/404.vue'),
+    component: () => import('@/views/exception/404.vue'),
     meta: {
       title: '找不到页面',
     },
