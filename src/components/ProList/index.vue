@@ -1,5 +1,7 @@
 <script lang="ts">
-import { defineComponent, onMounted, PropType, ref, unref } from 'vue';
+import type { PropType } from 'vue';
+import type { ListDirection } from 'vant';
+import { defineComponent, onMounted, ref, unref } from 'vue';
 import { isFunction } from '@/utils/validate';
 
 export default defineComponent({
@@ -54,7 +56,7 @@ export default defineComponent({
       default: 300,
     },
     direction: {
-      type: String,
+      type: String as PropType<ListDirection>,
       default: 'down',
     },
   },
