@@ -24,7 +24,7 @@ if (show()) {
     };
   });
 
-  loadScript('https://cdn.jsdelivr.net/npm/vconsole@3/dist/vconsole.min.js', function () {
+  loadScript('https://fastly.jsdelivr.net/npm/vconsole@3/dist/vconsole.min.js', function () {
     if (typeof vConsole === 'undefined') {
       // eslint-disable-next-line no-undef
       window.vConsole = new VConsole({
